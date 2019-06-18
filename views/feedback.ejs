@@ -1,0 +1,16 @@
+<%- include('header') -%>
+<%- include('menu') -%>
+    <div class="jumbotron" style="background-color:#8A2BE2">
+        <h1>Feedback Page</h1>
+        <p>Please add all kinds of advice for the game!</p>
+    </div>
+      <img src="images/strike.png" alt="a"width="100%">
+    <div class="jumbotron" >
+      <form method="post" action="/processform">
+        Username: <input type="text" name="url"> <hr>
+        Feedback: <textarea name="comments"></textarea>
+        <input type="submit">
+      </form>
+    </div>
+    <hr>
+<%- include('footer') -%>

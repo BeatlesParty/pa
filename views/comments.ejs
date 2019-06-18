@@ -1,0 +1,17 @@
+<%- include('header') -%>
+<%- include('menu') -%>
+<div class="jumbotron" style="background-color:#8A2BE2">
+    <h1>Comments</h1>
+</div>
+<img src="images/drop.png" alt="a"width="100%">
+<div class="jumbotron" style="background-color:#dfe22b">
+  <ol>
+  <% for(i = 0; i<comments.length; i++){  %>
+      <li> <a href="<%= comments[i].url %>">
+            <%= comments[i].url %></a>
+            <i>
+           <%= comments[i].comments %></\/i> </li>
+  <% } %>
+  </ol>
+</div>
+<%- include('footer') -%>
