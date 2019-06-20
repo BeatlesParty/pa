@@ -26,7 +26,7 @@ db.once('open', function() {
 const  commentController = require('./controllers/commentController.js')
 
 var taList = [
-      "csjbs2018@gmail.com", // usual password!
+         "csjbs2018@gmail.com", // usual password!
           "vanio@brandeis.edu",
        "tjhickey@brandeis.edu",
    "katherinezyb@brandeis.edu",
@@ -42,7 +42,7 @@ var taList = [
     "irvingperez@brandeis.edu",
         "chungek@brandeis.edu",
         "richardli@brandeis.edu",
-       "zepenghu@brandeis.edu"
+         "zepenghu@brandeis.edu"
 ]
 
 // Authentication
@@ -204,7 +204,7 @@ app.get('/Q01', function(req, res, next) {
 
 function processFormData(req,res,next){
   res.render('formdata',
-     {title:"Form Data",url:req.body.url, coms:req.body.theComments})
+     {title:"Form Data",url:req.body.url, comments:req.body.comments})
 }
 
 app.post('/processform', commentController.saveComment)

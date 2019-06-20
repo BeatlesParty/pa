@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 var commentSchema = Schema( {
   url: String,
-  comment: String
+  comments: String
 } );
 
 module.exports = mongoose.model( 'Comment', commentSchema );
