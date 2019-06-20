@@ -178,7 +178,7 @@ app.get('/profile', isLoggedIn, function(req, res) {
         });*/
     });
   //add page for editprofile
-  
+
 
 // END OF THE AUTHENTICATION ROUTES
 
@@ -197,8 +197,8 @@ app.get('/D02', function(req, res, next) {
   res.render('D02',{title:"D02"});
 });
 
-app.get('/D02', function(req, res, next) {
-  res.render('D02',{title:"D02"});
+app.get('/Q01', function(req, res, next) {
+  res.render('Q01',{title:"Q01"});
 });
 
 
@@ -210,6 +210,10 @@ function processFormData(req,res,next){
 app.post('/processform', commentController.saveComment)
 
 app.get('/showComments', commentController.getAllComments)
+// app.use('/', indexRouter);  // this is how we use a router to handle the / path
+// but here we are more direct
+
+app.get('/showComment/:id', commentController.getOneComment)
 
 //app.post('/feedback');
 //app.post('/dataprocess', processFormData);
