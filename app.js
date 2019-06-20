@@ -177,6 +177,8 @@ app.get('/profile', isLoggedIn, function(req, res) {
             user : req.user // get the user out of session and pass to template
         });*/
     });
+  //add page for editprofile
+  
 
 // END OF THE AUTHENTICATION ROUTES
 
@@ -189,6 +191,10 @@ app.get('/', function(req, res, next) {
 
 app.get('/feedback', function(req, res, next) {
   res.render('feedback',{title:"feedback"});
+});
+
+app.get('/D02', function(req, res, next) {
+  res.render('D02',{title:"D02"});
 });
 
 app.get('/D02', function(req, res, next) {

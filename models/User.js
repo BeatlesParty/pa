@@ -13,7 +13,11 @@ var userSchema = Schema( {
   description: String,
   classIds:[Schema.Types.ObjectId],
   classCodes:[String],
-  taEmail: String
+  taEmail: String,
+  profilePicURL:String,
+  bio:String,
+  lastLogin:Date,
+  userName: String
 } );
 
 module.exports = mongoose.model( 'User', userSchema );

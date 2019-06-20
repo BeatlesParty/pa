@@ -15,18 +15,19 @@
       <li class="nav-item">
         <a class="nav-link" href="/D02">D02<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li>
-      <% if (loggedIn) { %>
-      <li class="nav-item">
-        <a class="nav-link active" href="/logout"> Logout</a>
-      </li>
-      <% } else { %>
+        <% if (loggedIn) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile">Profile</a>
+          </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/auth/google"> Login</a>
+          <a class="nav-link active" href="/logout"> Logout</a>
         </li>
-        <% }  %>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link active" href="/auth/google"> Login</a>
+          </li>
+          <% }  %>
+</ul>
     </ul>
   </div>
 </nav>
