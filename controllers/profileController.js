@@ -1,37 +1,55 @@
 'use strict';
-const Comment = require( '../models/Comment' );
+const User = require( '../models/User' );
+const axios = require('axios');
+var apikey = require('../config/apikey');
+console.dir(apikey)
 
-exports.saveComment = ( req, res ) => {
-  //console.log("in saveSkill!")
-  //console.dir(req)
-  let newComment = new Comment(
-   {
-    url: req.body.url,
-    comments: req.body.comments
-   }
-  )
 
-  //console.log("skill = "+newSkill)
+exports.update = ( req, res ) => {
 
-  newComment.save()
-    .then( () => {
-      res.redirect( '/showComments' );
-    } )
-    .catch( error => {
-      res.send( error );
-    } );
+  User.findOne(res.locals.user._id)
+  .exec()
+  .then((p) => {
+    console.log("just found a profile")
+    console.dir(p)
+    p.userName = req.body.userName
+    p.profilePicURL = req.body.profilePicURL
+    p.zipcode = req.body.zipcode
+
+    // make a call to zicode server to look up the city and state
+    // and store them in the profile ....
+    const apikey= "gjY3xWAsjuDuvulkybx5HP7Q4UJ3sSYCPONsEfR6eh8fNYznov7Isht2Gy1no96s"
+    axios.get("https://www.zipcodeapi.com/rest/"+apikey+"/info.json/"+p.zipcode+"/degrees")
+      .then(function (response) {
+        // handle success
+        console.log(response);
+        console.dir(response);
+        p.city = response.data.city
+        p.state = response.data.state
+        p.lastUpdate = new Date()
+        p.save()
+        .then(() => {
+          res.redirect( '/profile' );
+        })
+
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  })
 };
 
-
-
-// this displays all of the skills
-exports.getAllComments = ( req, res ) => {
+exports.getAllProfiles = ( req, res ) => {
   //gconsle.log('in getAllSkills')
-  Comment.find()
+  User.find()
     .exec()
-    .then( ( comments ) => {
-      res.render( 'comments', {
-        comments:comments, title:"Comments"
+    .then( ( profiles ) => {
+      res.render( 'profiles', {
+        profiles:profiles, title:"Profiles"
       } );
     } )
     .catch( ( error ) => {
@@ -44,15 +62,15 @@ exports.getAllComments = ( req, res ) => {
 };
 
 // this displays all of the skills
-exports.getOneComment = ( req, res ) => {
+exports.getOneProfile = ( req, res ) => {
   //gconsle.log('in getAllSkills')
   const id = req.params.id
   console.log('the id is '+id)
-  Comment.findOne({_id:id})
+  User.findOne({_id:id})
     .exec()
-    .then( ( comment ) => {
-      res.render( 'comment', {
-        comment:comment, title:"Comment"
+    .then( ( profile ) => {
+      res.render( 'showProfile', {
+        profile:profile, title:"Profile"
       } );
     } )
     .catch( ( error ) => {

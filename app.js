@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var apikey = require('./config/apikey');
+
 // AUTHENTICATION MODULES
 session = require("express-session"),
 bodyParser = require("body-parser"),
@@ -24,6 +26,7 @@ db.once('open', function() {
 });
 
 const  commentController = require('./controllers/commentController.js')
+const profileController = require('./controllers/profileController')
 
 var taList = [
          "csjbs2018@gmail.com", // usual password!
@@ -101,15 +104,15 @@ app.use((req,res,next) => {
     console.dir(req.user)
     // here is where we can handle whitelisted logins ...
     if (req.user){
-      if (req.user.googleemail=='tjhickey@brandeis.edu'){
+      if (req.user.googleemail=='richardli@brandeis.edu'){
         console.log("Owner has logged in")
-        res.locals.status = 'teacher'
+        res.locals.status = 'Owner'
       } else if (taList.includes(req.user.googleemail)){
-        console.log("A TA has logged in")
-        res.locals.status = 'ta'
+        console.log("An Administrater has logged in")
+        res.locals.status = 'Admin'
       }else {
-        console.log('student has logged in')
-        res.locals.status = 'student'
+        console.log('A Visitor has logged in')
+        res.locals.status = 'visitor'
       }
     }
   }
@@ -177,16 +180,32 @@ app.get('/profile', isLoggedIn, function(req, res) {
             user : req.user // get the user out of session and pass to template
         });*/
     });
+    app.get('/editProfile',isLoggedIn, (req,res)=>{
+      res.render('editProfile')
+    })
+
+    app.get('/profiles', isLoggedIn, profileController.getAllProfiles);
+    app.get('/showProfile/:id', isLoggedIn, profileController.getOneProfile);
+
+
+    app.post('/updateProfile',profileController.update);
   //add page for editprofile
 
+  // add page for editProfile and views
+  // add router for updateProfile and send browser to /profie
 
 // END OF THE AUTHENTICATION ROUTES
 
+app.use(function(req,res,next){
+  console.log("about to look for routes!!!")
+  //console.dir(req.headers)
+  next()
+});
 
 
 
 app.get('/', function(req, res, next) {
-  res.render('index',{title:"TW Home"});
+  res.render('index',{title:"TankWorld Online"});
 });
 
 app.get('/feedback', function(req, res, next) {
@@ -201,6 +220,11 @@ app.get('/Q01', function(req, res, next) {
   res.render('Q01',{title:"Q01"});
 });
 
+
+app.use(function(req,res,next){
+  console.log("about to look for post routes!!!")
+  next()
+});
 
 function processFormData(req,res,next){
   res.render('formdata',
