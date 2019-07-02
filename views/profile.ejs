@@ -1,12 +1,12 @@
 <%- include('header') -%>
 <%- include('menu') -%>
 <div class="jumbotron">
-    <h1>Tank World Online Profile for <%= user.userName %></h1>
+    <h1>TankWorld Online Profile for <%= user.userName %></h1>
     <img src="<%= user.profilePicURL%>" width="200">
     <hr>
     <p> Welcome <%= user.googlename %>
         with email <%= user.googleemail %>
-        You are logged in to Tank World Online.
+        You are logged in to TankWorld Online.
     </p>
     <p> <%= user.zipcode %> <%= user.city %> <%= user.state %>
     <p> Last updated on <%= user.lastUpdate %> </p>

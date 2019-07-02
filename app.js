@@ -27,6 +27,7 @@ db.once('open', function() {
 
 const  commentController = require('./controllers/commentController.js')
 const profileController = require('./controllers/profileController')
+const forumPostController = require('./controllers/forumPostController')
 
 var taList = [
          "csjbs2018@gmail.com", // usual password!
@@ -220,6 +221,9 @@ app.get('/Q01', function(req, res, next) {
   res.render('Q01',{title:"Q01"});
 });
 
+app.get('/bmidemo', (req, res) => {
+  res.render('bmidemo',{title:"Grid Demo"});
+});
 
 app.use(function(req,res,next){
   console.log("about to look for post routes!!!")
@@ -243,9 +247,11 @@ app.get('/showComment/:id', commentController.getOneComment)
 //app.post('/dataprocess', processFormData);
 //app.post('/d02');
 
+app.get('/forum',forumPostController.getAllForumPosts)
 
+app.post('/forum',forumPostController.saveForumPost)
 
-
+app.post('/forumDelete',forumPostController.deleteForumPost)
 // catch 404 and forward to error handler
 
 app.use(function(req, res, next) {
