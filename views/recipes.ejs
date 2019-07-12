@@ -1,0 +1,49 @@
+<%- include('header') -%>
+<%- include('menu') -%>
+    <div class="jumbotron">
+        <h1>Quiz 3</h1>
+        <p>the name of the dish
+the ingredients in the dish
+a description of how to make the dish
+        </p>
+    </div>
+      <form method="post" action="/recipes">
+        The name of the dish: <br>
+        <textarea name="name"></textarea>
+        <hr>
+        The ingredients in the dish: <br>
+        <textarea name="ingredient"></textarea>
+            <br>
+        A description of how to make the dish: <br>
+        <textarea name="post"></textarea>
+            <hr>
+        <input type="submit">
+      </form>
+Below the form is a list of all of the recipes submitted so far. Each recipe will have the name, ingredients, directions, as well as the name of the person who submitted it and the date it was submitted, and a button to delete the recipe (which only appears for the user who submitted the recipe). The recipes are ordered with the most recently submitted recipe at the top.
+  <form method="post" action="/recipeDelete">
+    <ol>
+    <% for(i = 0; i<recipe.length; i++){  %>
+        <li> <a href="/showRecipe/<%= recipe[i]._id %>">
+          <hr>
+              Your user name is: <%= recipe[i].userName %></a>
+              <hr>
+              The Dish is: <%= recipe[i].name %>
+              <hr>
+              The ingredient needed is: <%= recipe[i].ingredient %>
+              <br>
+              The ways to cook it is: <%= recipe[i].post %>
+              <br>
+              <br>
+              <i><%= recipe[i].createdAt %></\/i> <br>
+             <% console.dir([recipe[i].userId,user._id]) %>
+             <% if (recipe[i].userId.equals(user._id)) { %>
+                 <input type="checkbox" name="delete" value="<%= recipe[i]._id %>">
+             <% } %>
+             <br>
+         </li>
+    <% } %>
+    </ol>
+    <input type="submit" value="delete marked">
+  </form>
+
+<%- include('footer') -%>

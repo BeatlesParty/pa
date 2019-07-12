@@ -18,7 +18,7 @@ var usersRouter = require('./routes/users');
 
 
 const mongoose = require( 'mongoose' );
-mongoose.connect( 'mongodb://localhost/tankworld' );
+mongoose.connect( 'mongodb://localhost/tankworld');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -28,6 +28,7 @@ db.once('open', function() {
 const  commentController = require('./controllers/commentController.js')
 const profileController = require('./controllers/profileController')
 const forumPostController = require('./controllers/forumPostController')
+const recipeController = require('./controllers/recipeController')
 
 var taList = [
          "csjbs2018@gmail.com", // usual password!
@@ -75,8 +76,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 /*************************************************************************
      HERE ARE THE AUTHENTICATION ROUTES
 **************************************************************************/
-
-app.use(session({ secret: 'zzbbyanana' }));
+app.use(session({secret: 'zzbbyanana',
+                 saveUninitialized: true,
+                 resave: true}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -187,8 +189,6 @@ app.get('/profile', isLoggedIn, function(req, res) {
 
     app.get('/profiles', isLoggedIn, profileController.getAllProfiles);
     app.get('/showProfile/:id', isLoggedIn, profileController.getOneProfile);
-
-
     app.post('/updateProfile',profileController.update);
   //add page for editprofile
 
@@ -216,6 +216,7 @@ app.get('/feedback', function(req, res, next) {
 app.get('/D02', function(req, res, next) {
   res.render('D02',{title:"D02"});
 });
+
 
 app.get('/Q01', function(req, res, next) {
   res.render('Q01',{title:"Q01"});
@@ -248,10 +249,13 @@ app.get('/showComment/:id', commentController.getOneComment)
 //app.post('/d02');
 
 app.get('/forum',forumPostController.getAllForumPosts)
+app.get('/recipes',recipeController.getAllForumPosts)
 
 app.post('/forum',forumPostController.saveForumPost)
+app.post('/recipes',recipeController.saveForumPost)
 
 app.post('/forumDelete',forumPostController.deleteForumPost)
+app.post('/recipeDelete',recipeController.deleteForumPost)
 // catch 404 and forward to error handler
 
 app.use(function(req, res, next) {
