@@ -3,8 +3,17 @@
 <div class="jumbotron jumbotron-fluid" style="background-color:#82a917">
   <div class="container">
     <h1>Tank World OL</h1>
-    <hr>
-    <div class="spinner-border text-primary" role="status">
+      <button type="button" class="btn btn-primary" onclick=" relocate_home()"> Play <span class="badge badge-danger"></span></button>
+      <script>
+function relocate_home()
+{
+     location.href = "http://localhost:8000/TankWorldBeta.html";
+}
+</script>
+<p>1. Please Clone our Game from <a href="https://github.com/BeatlesParty/TankWorldBeta.git">https://github.com/BeatlesParty/TankWorldBeta.git</a><br>
+  2. Please serve it on your terminal at the folder location using: python -m SimpleHTTPServer<br>
+  3. Hit the Play Button and you can play!
+    <hr><div class="spinner-border text-primary" role="status">
     <span class="sr-only">Loading...</span>
       </div>
       <div class="spinner-border text-secondary" role="status">
